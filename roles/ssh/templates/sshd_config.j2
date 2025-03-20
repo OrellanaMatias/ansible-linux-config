@@ -1,0 +1,29 @@
+# Configuración de seguridad para SSH
+
+# Protocolo SSH y puertos
+Port 22
+Protocol 2
+
+# Autenticación
+PermitRootLogin no
+PubkeyAuthentication yes
+PasswordAuthentication no
+ChallengeResponseAuthentication no
+UsePAM yes
+
+# Configuración de tiempo de espera
+ClientAliveInterval 300
+ClientAliveCountMax 2
+
+# Restricciones
+MaxAuthTries 3
+MaxSessions 10
+
+# Configuración de X11
+X11Forwarding no
+
+# Configuración de SFTP
+Subsystem sftp internal-sftp
+
+# Banner personalizado
+Banner /etc/issue.net

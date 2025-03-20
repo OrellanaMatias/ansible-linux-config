@@ -1,0 +1,25 @@
+---
+- name: Crear directorio para la aplicación
+  file:
+    path: /var/www/app
+    state: directory
+    mode: '0755'
+
+- name: Descargar y descomprimir el sitio web
+  unarchive:
+    src: "{{ app_tarball_path | default('files/website.tar.gz') }}"
+    dest: /var/www/app
+    remote_src: "{{ app_remote_src | default('no') }}"
+
+- name: Configurar nginx para servir la aplicación
+  template:
+    src: app.conf.j2
+    dest: /etc/nginx/sites-available/app
+  notify: Reiniciar nginx
+
+- name: Habilitar el sitio de la aplicación
+  file:
+    src: /etc/nginx/sites-available/app
+    dest: /etc/nginx/sites-enabled/app
+    state: link
+  notify: Reiniciar nginx

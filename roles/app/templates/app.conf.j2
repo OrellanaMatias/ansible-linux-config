@@ -1,0 +1,20 @@
+server {
+    listen 80;
+    server_name {{ app_domain | default('_') }};
+
+    root /var/www/app;
+    index index.html index.htm;
+
+    location / {
+        try_files $uri $uri/ =404;
+    }
+
+    # Configuración de seguridad básica
+    location ~ /\. {
+        deny all;
+    }
+
+    # Configuración de logs
+    access_log /var/log/nginx/app_access.log;
+    error_log /var/log/nginx/app_error.log;
+}

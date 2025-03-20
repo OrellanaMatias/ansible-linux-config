@@ -1,0 +1,21 @@
+---
+- name: Asegurar que el directorio .ssh existe
+  file:
+    path: "{{ ssh_user_home | default('/root') }}/.ssh"
+    state: directory
+    mode: '0700'
+    owner: "{{ ssh_user | default('root') }}"
+    group: "{{ ssh_user | default('root') }}"
+
+- name: Agregar clave pública SSH
+  authorized_key:
+    user: "{{ ssh_user | default('root') }}"
+    key: "{{ ssh_public_key | default('') }}"
+    state: present
+  when: ssh_public_key is defined and ssh_public_key != ''
+
+- name: Configurar sshd_config para mayor seguridad
+  template:
+    src: sshd_config.j2
+    dest: /etc/ssh/sshd_config
+  notify: Reiniciar SSH

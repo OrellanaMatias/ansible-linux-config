@@ -1,0 +1,42 @@
+# Archivos de Ansible
+*.retry
+
+# Variables de entorno y configuración local
+.env
+*.env
+
+# Archivos de sistema operativo
+.DS_Store
+Thumbs.db
+
+# Archivos de Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+
+# Archivos de IDE y editores
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Archivos de logs
+*.log
+
+# Archivos de configuración local
+local.yml
+local.yaml
+
+# Archivos sensibles
+**/vault.yml
+**/vault.yaml
+**/secrets.yml
+**/secrets.yaml
+.vault_pass
+
+# Archivos temporales
+tmp/
+.tmp/

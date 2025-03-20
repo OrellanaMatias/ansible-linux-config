@@ -1,0 +1,10 @@
+---
+- name: Configuración del servidor
+  hosts: servers
+  become: yes  # Para ejecutar tareas con privilegios de superusuario
+
+  roles:
+    - { role: base, tags: ['base'] }
+    - { role: nginx, tags: ['nginx'] }
+    - { role: app, tags: ['app'] }
+    - { role: ssh, tags: ['ssh'] }

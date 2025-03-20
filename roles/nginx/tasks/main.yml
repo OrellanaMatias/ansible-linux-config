@@ -1,0 +1,29 @@
+---
+- name: Instalar nginx
+  apt:
+    name: nginx
+    state: present
+
+- name: Asegurar que nginx está ejecutándose
+  service:
+    name: nginx
+    state: started
+    enabled: yes
+
+- name: Crear directorio para sitios web
+  file:
+    path: /var/www/html
+    state: directory
+    mode: '0755'
+
+- name: Configurar nginx
+  template:
+    src: nginx.conf.j2
+    dest: /etc/nginx/nginx.conf
+  notify: Reiniciar nginx
+
+- name: Configurar sitio por defecto
+  template:
+    src: default.conf.j2
+    dest: /etc/nginx/sites-available/default
+  notify: Reiniciar nginx

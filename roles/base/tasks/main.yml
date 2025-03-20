@@ -1,0 +1,40 @@
+---
+- name: Actualizar caché de paquetes
+  apt:
+    update_cache: yes
+    cache_valid_time: 3600
+
+- name: Actualizar todos los paquetes del sistema
+  apt:
+    upgrade: dist
+    force_apt_get: yes
+
+- name: Instalar utilidades básicas
+  apt:
+    name:
+      - vim
+      - curl
+      - wget
+      - htop
+      - git
+      - unzip
+      - fail2ban
+    state: present
+
+- name: Configurar fail2ban
+  copy:
+    dest: /etc/fail2ban/jail.local
+    content: |
+      [DEFAULT]
+      bantime = 3600
+      findtime = 600
+      maxretry = 5
+
+      [sshd]
+      enabled = true
+
+- name: Asegurar que fail2ban está ejecutándose
+  service:
+    name: fail2ban
+    state: started
+    enabled: yes
